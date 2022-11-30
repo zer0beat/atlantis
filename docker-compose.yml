@@ -7,7 +7,7 @@ services:
         - 4040:4040
         environment:
             # https://dashboard.ngrok.com/get-started/your-authtoken
-            NGROK_AUTH: REPLACE-WITH-YOUR-TOKEN
+            NGROK_AUTH: 2EEFRAlW9HXH5icafJ3h6UWPN2m_5HGpP6JjJwtRHEXKjMxwm
             NGROK_PROTOCOL: http
             NGROK_PORT: atlantis:4141
         depends_on:
@@ -28,12 +28,14 @@ services:
             dockerfile: Dockerfile.dev
         ports:
         - 4141:4141
+        - 2345:2345
         volumes:
-            - ~/.ssh:/.ssh
-            - ./:/atlantis/src
+            - /Users/joel.llacer/.ssh:/.ssh
+            - /Users/joel.llacer/projects/opensource/atlantis/:/atlantis/src
         # Contains the flags that atlantis uses in env var form
         env_file:
             - ./atlantis.env
+        command: [ "/root/go/bin/dlv", "exec", "/usr/local/bin/atlantis", "server", "-l", "0.0.0.0:2345", "--headless", "--api-version", "2" ]
 
 volumes:
     redis:

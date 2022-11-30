@@ -4,3 +4,11 @@ COPY atlantis /usr/local/bin/atlantis
 ENV DEFAULT_CONFTEST_VERSION=0.34.0
 
 WORKDIR /atlantis/src
+
+ENV PATH $PATH:/usr/local/go/bin
+
+RUN wget https://go.dev/dl/go1.17.3.linux-arm64.tar.gz && \
+    tar -C /usr/local -xzf go1.17.3.linux-arm64.tar.gz && \
+    go install github.com/go-delve/delve/cmd/dlv@latest
+
+
